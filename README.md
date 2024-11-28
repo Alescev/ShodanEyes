@@ -2,6 +2,8 @@
 
 A lightweight tool inspired by [Censys](https://censys.io/)'s host exploration feature, but designed for Shodan. This tool helps you find similar hosts based on specific attributes of a target IP address.
 
+(This project is not affiliated with, endorsed by, or connected to Shodan or Censys in any way)
+
 ## Features ✨
 
 - Analyzes multiple host attributes including:
@@ -56,3 +58,7 @@ While inspired by Censys's similar hosts feature, this tool:
 - Rate limiting is NOT implemented to prevent API exhaustion
 - Some fields might not be available for all hosts
 - API queries count against your Shodan API limits
+
+## Disclaimer
+
+This is an independent project that uses the publicly available Shodan API. "Shodan" is a trademark of Shodan HQ LLC. This tool is maintained by the community and is not officially supported by Shodan.
