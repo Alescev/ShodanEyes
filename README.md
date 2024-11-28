@@ -1,6 +1,6 @@
-# Shodan Host Explorer 🔍
+# ShodanEyes 🔍
 
-A lightweight tool inspired by [Censys](https://censys.io/)'s host exploration feature, but designed for Shodan. This tool helps you find similar hosts based on specific attributes of a target IP address.
+A lightweight tool inspired by Censys's host exploration feature called [Censeye](https://github.com/Censys-Research/censeye) and described [here](https://censys.com/automated-hunting/), but designed for Shodan. This tool helps you find similar hosts based on specific attributes of a target IP address.
 
 ## Features ✨
 
@@ -14,8 +14,6 @@ A lightweight tool inspired by [Censys](https://censys.io/)'s host exploration f
   - Product information
 - Identifies unique characteristics across all services/ports
 - Highlights interesting results (hosts with ≤200 matches)
-- User-friendly colored output
-- Rate-limiting protection
 
 ## Usage 💻
 
