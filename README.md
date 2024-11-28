@@ -34,7 +34,7 @@ The tool will:
 
 <img width="340" alt="Screenshot 2024-11-28 152909" src="https://github.com/user-attachments/assets/e77ecedf-86d7-4ccc-b8c4-97288ea9dbf3">
 
-## Differences from Censys 🔄
+## Differences from Censeye 🔄
 
 While inspired by Censys's similar hosts feature, this tool:
 - Works with Shodan's data structure
@@ -50,6 +50,10 @@ While inspired by Censys's similar hosts feature, this tool:
   - shodan
   - colorama
   - argparse
+
+## Disclaimer
+
+This is an independent project that uses the publicly available Shodan API. "Shodan" is a trademark of Shodan HQ LLC. This tool is maintained by the community and is not officially supported by Shodan.
 
 ## Notes 📌
 > [!CAUTION]
