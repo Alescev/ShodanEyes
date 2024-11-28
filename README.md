@@ -29,8 +29,8 @@ The tool will:
 4. Display results, highlighting particularly unique characteristics
 
 ## Output Example 📋
-...
 
+<img width="340" alt="Screenshot 2024-11-28 152909" src="https://github.com/user-attachments/assets/e77ecedf-86d7-4ccc-b8c4-97288ea9dbf3">
 
 ## Differences from Censys 🔄
 
