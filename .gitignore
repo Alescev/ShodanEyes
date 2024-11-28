@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+ENV/
+
+# IDE settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Project specific
+config.py
+*.log
+
+# Operating System
+.DS_Store
+Thumbs.db
