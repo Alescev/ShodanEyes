@@ -53,7 +53,7 @@ While inspired by Censys's similar hosts feature, this tool:
 
 ## Disclaimer
 
-This is an independent project that uses the publicly available Shodan API. "Shodan" is a trademark of Shodan HQ LLC. This tool is maintained by the community and is not officially supported by Shodan.
+This is an independent project that uses the publicly available Shodan API. "Shodan" is a trademark of Shodan HQ LLC. This tool is not officially supported by Shodan.
 
 ## Notes 📌
 > [!CAUTION]
