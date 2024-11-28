@@ -50,7 +50,11 @@ While inspired by Censys's similar hosts feature, this tool:
   - argparse
 
 ## Notes 📌
+> [!CAUTION]
+> Rate limiting is NOT implemented to prevent API exhaustion
 
-- Rate limiting is NOT implemented to prevent API exhaustion
-- Some fields might not be available for all hosts
-- API queries count against your Shodan API limits
+
+> [!CAUTION]
+> API queries count against your Shodan API limits
+
+
