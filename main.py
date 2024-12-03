@@ -102,35 +102,67 @@ def search_similar_hosts(field, value):
         return None
 
 def format_result(query, count):
-    """Format a single result with proper styling"""
+    """Format a single result with proper styling and make it clickable"""
+    base_url = "https://www.shodan.io/search?query="
+    query_url = f"{base_url}{query.replace(':', '%3A').replace(' ', '+')}"
+    
     if count <= max_interesting_count:
-        return f"{Fore.GREEN}▶ {query}{Style.RESET_ALL}\n  └─ {Fore.CYAN}{count:,} hosts{Style.RESET_ALL} {Fore.YELLOW}(Interesting!){Style.RESET_ALL}"
+        # Create a clickable link using ANSI escape sequences
+        clickable_link = f"\033]8;;{query_url}\033\\{query_url}\033]8;;\033\\"
+        return f"{Fore.GREEN}▶ {query}{Style.RESET_ALL} ({clickable_link})\n  └─ {Fore.CYAN}{count:,} hosts{Style.RESET_ALL} {Fore.YELLOW}(Interesting!){Style.RESET_ALL}"
     else:
         return f"{Fore.WHITE}▶ {query}{Style.RESET_ALL}\n  └─ {Fore.CYAN}{count:,} hosts{Style.RESET_ALL}"
 
-def main(ip):
+def main(ips):
     print_banner()
     
-    # Get the host data
-    print_section("Host Information")
-    host_data = get_host_data(ip)
-    if not host_data:
-        return
-
-    # Extract values from the host
-    print_section("Value Extraction")
-    values = extract_values_from_host(host_data)
-    if not values:
-        print(f"{Fore.RED}No searchable values found in host data.{Style.RESET_ALL}")
-        return
+    # Split the input IPs and strip any whitespace
+    ip_list = [ip.strip() for ip in ips.split(',')]
     
-    total_values = sum(len(vals) for vals in values.values())
-    print(f"{Fore.GREEN}✔ Found {total_values} searchable values across {len(values)} fields{Style.RESET_ALL}")
+    # If single IP, mention we're in single-host mode
+    if len(ip_list) == 1:
+        print(f"{Fore.BLUE}Running in single-host mode{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.BLUE}Running in multi-host mode with {len(ip_list)} hosts{Style.RESET_ALL}")
+    
+    # Get the host data for each IP
+    all_values = []
+    for ip in ip_list:
+        print_section(f"Host Information for {ip}")
+        host_data = get_host_data(ip)
+        if not host_data:
+            return
+        values = extract_values_from_host(host_data)
+        if not values:
+            print(f"{Fore.RED}No searchable values found in host data for {ip}.{Style.RESET_ALL}")
+            return
+        all_values.append(values)
+    
+    # For single IP, use all values. For multiple IPs, find common values
+    if len(ip_list) == 1:
+        search_values = all_values[0]
+    else:
+        search_values = {}
+        for field in fields_to_check:
+            sets = [set(values.get(field, [])) for values in all_values]
+            common_set = set.intersection(*sets)
+            if common_set:
+                search_values[field] = list(common_set)
+        
+        if not search_values:
+            print(f"{Fore.RED}No common searchable values found across provided IPs.{Style.RESET_ALL}")
+            return
+    
+    total_values = sum(len(vals) for vals in search_values.values())
+    if len(ip_list) == 1:
+        print(f"{Fore.GREEN}✔ Found {total_values} searchable values across {len(search_values)} fields{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.GREEN}✔ Found {total_values} common searchable values across {len(search_values)} fields{Style.RESET_ALL}")
 
     # Search for similar hosts
     print_section("Similar Hosts Search")
     results = {}
-    for field, value_list in values.items():
+    for field, value_list in search_values.items():
         for value in value_list:
             print(f"{Fore.BLUE}⚡ Searching for {field}...{Style.RESET_ALL}", end='\r')
             count = search_similar_hosts(field, value)
@@ -164,7 +196,8 @@ def main(ip):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Shodan Host Explorer - Find similar hosts based on specific attributes')
-    parser.add_argument('ip', help='IP address to analyze')
+    parser.add_argument('ips', nargs='+', help='IP addresses to analyze, separated by spaces')
     args = parser.parse_args()
 
-    main(args.ip)
+    # Join the IPs with commas to match the expected input format
+    main(','.join(args.ips))
