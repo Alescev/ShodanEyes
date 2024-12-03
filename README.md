@@ -14,21 +14,28 @@ A lightweight tool inspired by Censys's host exploration feature called [Censeye
   - SSL certificate details
   - JARM fingerprints
   - Product information
+- Supports multiple IP analysis mode
 - Identifies unique characteristics across all services/ports
 - Highlights interesting results (hosts with ≤200 matches)
 
 ## Usage 💻
 
-Run the script with an IP address: 
+Single IP mode: 
+- python main.py 1.2.3.4
 
-"python main.py 1.2.3.4"
+Multiple IPs mode:
+- python main.py 1.2.3.4 5.6.7.8 9.10.11.12
 
 
 The tool will:
 1. Fetch all available data for the IP from Shodan
-2. Extract unique values for each field
-3. Search Shodan for other hosts with matching attributes
-4. Display results, highlighting particularly unique characteristics
+2. In multiple IP mode:
+   - Identify shared parameters between IPs
+   - Focus analysis on common attributes
+   - Optimize API queries by analyzing only relevant shared characteristics
+3. Extract unique values for each field
+4. Search Shodan for other hosts with matching attributes
+5. Display results, highlighting particularly unique characteristics
 
 ## Output Example 📋
 
